@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7eff6252.css",
+    "main.js": "/static/js/main.596030ec.js",
+    "static/js/787.09bfd63c.chunk.js": "/static/js/787.09bfd63c.chunk.js",
+    "static/media/flights-logo.png": "/static/media/flights-logo.44485daa4928eaa2edf0.png",
+    "index.html": "/index.html",
+    "main.7eff6252.css.map": "/static/css/main.7eff6252.css.map",
+    "main.596030ec.js.map": "/static/js/main.596030ec.js.map",
+    "787.09bfd63c.chunk.js.map": "/static/js/787.09bfd63c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7eff6252.css",
+    "static/js/main.596030ec.js"
+  ]
+}
