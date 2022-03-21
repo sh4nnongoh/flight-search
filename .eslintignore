@@ -1,0 +1,5 @@
+build
+node_modules
+*.svg
+*.css
+src/react-app-env.d.ts
