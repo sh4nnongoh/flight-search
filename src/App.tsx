@@ -6,16 +6,20 @@ import {
 } from "react-bulma-components";
 import FlightsLogo from "./assets/flights-logo.png";
 import FlightDetails from "./components/FlightDetails";
-import MCFFlightsContextWrapper from "./contexts/MCFFlightsContext";
+import FlightResults from "./components/FlightResults";
+import MCFFlightsProvider from "./contexts/MCFFlightsProvider";
 const App: FC = (): ReactElement => (
-  <MCFFlightsContextWrapper>
+  <MCFFlightsProvider>
     <Container display="flex" marginless style={{ padding: "2.5rem" }}>
       <Image src={FlightsLogo} alt="flights-logo" size={64} />
       <Heading size={1} style={{ paddingLeft: "1rem" }}>
         Flights
       </Heading>
     </Container>
-    <FlightDetails />
-  </MCFFlightsContextWrapper>
+    <Container display="flex">
+      <FlightDetails />
+      <FlightResults />
+    </Container>
+  </MCFFlightsProvider>
 );
 export default App;

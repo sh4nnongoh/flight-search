@@ -24,18 +24,75 @@ describe(userStory, () => {
     name: "Tokyo",
     country: "Japan"
   }];
-  const departureDate = "2022-03-15";
-  const returnDate = "2022-03-16";
+  const flights = [{
+    departingFlight: {
+      id: 1,
+      iata: "SQ",
+      flightNo: "SQ-997",
+      price: {
+        amount: 964,
+        currency: "SGD"
+      },
+      from: {
+        code: "SIN",
+        name: "Singapore",
+        country: "Singapore"
+      },
+      to: {
+        code: "TYO",
+        name: "Tokyo",
+        country: "Japan"
+      },
+      time: {
+        departure: "2022-03-24T13:40:00+08:00",
+        arrival: "2022-03-25T03:10:00+08:00",
+        duration: "13h30m"
+      }
+    },
+    returningFlight: {
+      id: 2,
+      iata: "ABC",
+      flightNo: "ABC-998",
+      price: {
+        amount: 964,
+        currency: "SGD"
+      },
+      from: {
+        code: "TYO",
+        name: "Tokyo",
+        country: "Japan"
+      },
+      to: {
+        code: "SIN",
+        name: "Singapore",
+        country: "Singapore"
+      },
+      time: {
+        departure: "2022-03-27T14:40:00+08:00",
+        arrival: "2022-03-28T04:10:00+08:00",
+        duration: "13h30m"
+      }
+    }
+  }];
+  const departureDate = "2022-03-24";
+  const returnDate = "2022-03-27";
   let datePickers: HTMLElement[];
   beforeEach(async () => {
-    axios.get = jest.fn().mockResolvedValueOnce({
-      data: {
+    axios.get = jest.fn()
+      .mockResolvedValueOnce({
         data: {
-          result: cities
+          data: {
+            result: cities
+          }
         }
-      }
-    })
-      .mockResolvedValueOnce({});
+      })
+      .mockResolvedValueOnce({
+        data: {
+          data: {
+            result: flights
+          }
+        }
+      });
     render(<App />);
     await waitFor(() => screen.getByText(/^Return$/));
     userEvent.selectOptions(screen.getByRole("combobox", { name: /From/i }), screen.getAllByText(/Singapore/i)[0]);
@@ -44,6 +101,7 @@ describe(userStory, () => {
     fireEvent.change(datePickers[0], { target: { value: departureDate } });
     fireEvent.change(datePickers[1], { target: { value: returnDate } });
     fireEvent.click(screen.getByRole("button", { name: /Search/i }));
+    await waitFor(() => screen.getByText(/Your Results/i));
   });
   it("calls axios with the correct data", () => {
     expect(datePickers[0]).toHaveValue(departureDate);
@@ -57,5 +115,23 @@ describe(userStory, () => {
         "return-date": returnDate
       }
     });
+  });
+  it("shows the 'Your Results' header", () => {
+    expect(screen.getByText(/Your Results/i)).toBeInTheDocument();
+  });
+  it("shows the flight data", () => {
+    expect(screen.getByText(flights[0].departingFlight.iata)).toBeInTheDocument();
+    expect(screen.getByText(flights[0].returningFlight.iata)).toBeInTheDocument();
+    expect(screen.getByText(flights[0].departingFlight.flightNo)).toBeInTheDocument();
+    expect(screen.getByText(flights[0].returningFlight.flightNo)).toBeInTheDocument();
+    expect(screen.getByText(`${flights[0].departingFlight.from.code} > ${flights[0].departingFlight.to.code}`))
+      .toBeInTheDocument();
+    expect(screen.getByText(`${flights[0].returningFlight.from.code} > ${flights[0].returningFlight.to.code}`))
+      .toBeInTheDocument();
+    expect(screen.getByText("Depart: 01:40pm")).toBeInTheDocument();
+    expect(screen.getByText("Arrival: 03:10am")).toBeInTheDocument();
+    expect(screen.getByText("Depart: 02:40pm")).toBeInTheDocument();
+    expect(screen.getByText("Arrival: 04:10am")).toBeInTheDocument();
+    expect(screen.getByText(`$${flights[0].departingFlight.price.amount}`)).toBeInTheDocument();
   });
 });

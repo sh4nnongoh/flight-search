@@ -1,10 +1,11 @@
+import _ from "lodash";
 import React, {
   FC, ReactElement, useContext, useState
 } from "react";
 import {
   Button, Container, Form
 } from "react-bulma-components";
-import { MCFFlightsContext } from "../contexts/Contexts";
+import { MCFFlightsContext } from "../contexts/MCFFlightsProvider";
 interface OptionType {
   value: string,
   displayName: string
@@ -18,15 +19,15 @@ const FlightDetailsForm: FC<{
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
-  const { getMCFFlights } = useContext(MCFFlightsContext);
+  const { getMCFReturnFlights, setReturnFlightResults } = useContext(MCFFlightsContext);
   const onSearch = () => {
-    getMCFFlights({
+    getMCFReturnFlights({
       origin: from,
       destination: to,
       "departure-date": departureDate,
       "return-date": returnDate
     }).then((r) => {
-      console.log(r);
+      setReturnFlightResults(_.get(r, ["data", "data", "result"], []));
     }).catch((e) => {
       console.log(e);
     });

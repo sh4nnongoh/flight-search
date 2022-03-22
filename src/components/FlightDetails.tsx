@@ -5,7 +5,7 @@ import React, {
 import {
   Container, Tabs
 } from "react-bulma-components";
-import { City, MCFFlightsContext } from "../contexts/Contexts";
+import { City, MCFFlightsContext } from "../contexts/MCFFlightsProvider";
 import FlightDetailsForm from "./FlightDetailsForm";
 const FlightDetails: FC = (): ReactElement => {
   const { getMCFCities } = useContext(MCFFlightsContext);
@@ -21,7 +21,7 @@ const FlightDetails: FC = (): ReactElement => {
       })));
       setIsLoading(false);
     });
-  }, [getMCFCities]);
+  }, []);
   return (
     <>
       {
