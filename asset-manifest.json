@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "https://sh4nnongoh.github.io/flight-search/static/css/main.274bbdbf.css",
-    "main.js": "https://sh4nnongoh.github.io/flight-search/static/js/main.96939239.js",
+    "main.css": "https://sh4nnongoh.github.io/flight-search/static/css/main.7eff6252.css",
+    "main.js": "https://sh4nnongoh.github.io/flight-search/static/js/main.54974a9a.js",
     "static/js/787.09bfd63c.chunk.js": "https://sh4nnongoh.github.io/flight-search/static/js/787.09bfd63c.chunk.js",
     "static/media/flights-logo.png": "https://sh4nnongoh.github.io/flight-search/static/media/flights-logo.44485daa4928eaa2edf0.png",
     "index.html": "https://sh4nnongoh.github.io/flight-search/index.html",
-    "main.274bbdbf.css.map": "https://sh4nnongoh.github.io/flight-search/static/css/main.274bbdbf.css.map",
-    "main.96939239.js.map": "https://sh4nnongoh.github.io/flight-search/static/js/main.96939239.js.map",
+    "main.7eff6252.css.map": "https://sh4nnongoh.github.io/flight-search/static/css/main.7eff6252.css.map",
+    "main.54974a9a.js.map": "https://sh4nnongoh.github.io/flight-search/static/js/main.54974a9a.js.map",
     "787.09bfd63c.chunk.js.map": "https://sh4nnongoh.github.io/flight-search/static/js/787.09bfd63c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.274bbdbf.css",
-    "static/js/main.96939239.js"
+    "static/css/main.7eff6252.css",
+    "static/js/main.54974a9a.js"
   ]
 }
