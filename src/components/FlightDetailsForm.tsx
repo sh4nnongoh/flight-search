@@ -1,4 +1,5 @@
 import _ from "lodash";
+import moment from "moment";
 import React, {
   FC, ReactElement, useContext, useState
 } from "react";
@@ -117,6 +118,7 @@ const FlightDetailsForm: FC<{
         disabled={
           (!tab0Active && (from === "" || to === "" || departureDate === "" || returnDate === ""))
           || (tab0Active && (from === "" || to === "" || departureDate === ""))
+          || (!tab0Active && moment(returnDate).isBefore(moment(departureDate)))
         }
       >
         Search
