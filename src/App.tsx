@@ -8,6 +8,7 @@ import FlightsLogo from "./assets/flights-logo.png";
 import FlightDetails from "./components/FlightDetails";
 import FlightResults from "./components/FlightResults";
 import MCFFlightsProvider from "./contexts/MCFFlightsProvider";
+import "./App.css";
 const App: FC = (): ReactElement => (
   <MCFFlightsProvider>
     <Container display="flex" marginless style={{ padding: "2.5rem" }}>
