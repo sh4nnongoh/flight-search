@@ -101,6 +101,7 @@ describe(userStory, () => {
     fireEvent.change(datePickers[0], { target: { value: departureDate } });
     fireEvent.change(datePickers[1], { target: { value: returnDate } });
     fireEvent.click(screen.getByRole("button", { name: /Search/i }));
+    screen.getByTestId("loader");
     await waitFor(() => screen.getByText(/Your Results/i));
   });
   it("calls axios with the correct data", () => {
