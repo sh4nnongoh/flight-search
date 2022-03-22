@@ -9,11 +9,14 @@ interface OptionType {
   value: string,
   displayName: string
 }
-const FlightDetailsForm: FC<{options: OptionType[]}> = ({ options }): ReactElement => {
+const FlightDetailsForm: FC<{
+  options: OptionType[],
+  tab0Active: boolean
+}> = ({ options, tab0Active }): ReactElement => {
   const optionList = options.map((opt) => <option key={opt.value} value={opt.value}>{opt.displayName}</option>);
   useEffect(() => {
     bulmaCalendar.attach("[type=\"date\"]");
-  }, []);
+  }, [tab0Active]);
   return (
     <Container display="flex" flexDirection="column" alignItems="center">
       <form style={{ width: "18rem" }}>
@@ -45,14 +48,18 @@ const FlightDetailsForm: FC<{options: OptionType[]}> = ({ options }): ReactEleme
             <input id="departure-date" type="date" />
           </Form.Control>
         </Form.Field>
-        <Form.Field>
-          <Form.Label htmlFor="return-date">
-            Return Date
-          </Form.Label>
-          <Form.Control>
-            <input id="return-date" type="date" />
-          </Form.Control>
-        </Form.Field>
+        {
+          !tab0Active && (
+            <Form.Field>
+              <Form.Label htmlFor="return-date">
+                Return Date
+              </Form.Label>
+              <Form.Control>
+                <input id="return-date" type="date" />
+              </Form.Control>
+            </Form.Field>
+          )
+        }
       </form>
       <Button color="primary" style={{ margin: "1.5rem" }}>
         Search

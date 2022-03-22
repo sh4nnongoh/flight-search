@@ -11,6 +11,7 @@ const FlightDetails: FC = (): ReactElement => {
   const { getMCFCities } = useContext(MCFFlightsContext);
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [tab0Active, setTab0Active] = useState(false);
   useEffect(() => {
     setIsLoading(true);
     getMCFCities?.then((res) => {
@@ -27,14 +28,14 @@ const FlightDetails: FC = (): ReactElement => {
       !isLoading && (
         <Container style={{ width: "18rem" }}>
           <Tabs align="center">
-            <Tabs.Tab>
+            <Tabs.Tab active={tab0Active} onClick={() => setTab0Active(true)}>
               One Way
             </Tabs.Tab>
-            <Tabs.Tab active>
+            <Tabs.Tab active={!tab0Active} onClick={() => setTab0Active(false)}>
               Return
             </Tabs.Tab>
           </Tabs>
-          <FlightDetailsForm options={options} />
+          <FlightDetailsForm options={options} tab0Active={tab0Active} />
         </Container>
       )
     }
