@@ -19,18 +19,34 @@ const FlightDetailsForm: FC<{
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
-  const { getMCFReturnFlights, setReturnFlightResults } = useContext(MCFFlightsContext);
+  const {
+    getMCFReturnFlights, setReturnFlightResults, getMCFOneWayFlights, setOneWayFlightResults
+  } = useContext(MCFFlightsContext);
   const onSearch = () => {
-    getMCFReturnFlights({
-      origin: from,
-      destination: to,
-      "departure-date": departureDate,
-      "return-date": returnDate
-    }).then((r) => {
-      setReturnFlightResults(_.get(r, ["data", "data", "result"], []));
-    }).catch((e) => {
-      console.log(e);
-    });
+    setReturnFlightResults(undefined);
+    setOneWayFlightResults(undefined);
+    if (tab0Active) {
+      getMCFOneWayFlights({
+        origin: from,
+        destination: to,
+        "departure-date": departureDate
+      }).then((r) => {
+        setOneWayFlightResults(_.get(r, ["data", "data", "result"], []));
+      }).catch((e) => {
+        console.log(e);
+      });
+    } else {
+      getMCFReturnFlights({
+        origin: from,
+        destination: to,
+        "departure-date": departureDate,
+        "return-date": returnDate
+      }).then((r) => {
+        setReturnFlightResults(_.get(r, ["data", "data", "result"], []));
+      }).catch((e) => {
+        console.log(e);
+      });
+    }
   };
   return (
     <Container display="flex" flexDirection="column" alignItems="center">

@@ -34,6 +34,13 @@ export interface ReturnFlightObj {
   departingFlight: Flight,
   returningFlight: Flight
 }
+export interface OneWayFlights {
+  data: ReturnFlightsData
+}
+export interface OneWayFlightsData {
+  total: number,
+  result: Flight[]
+}
 export interface Flight {
   id: number,
   iata: string,
@@ -52,36 +59,42 @@ export interface FlightTime {
   arrival: string,
   duration: string
 }
+const stub = {
+  data: {
+    total: 0,
+    result: []
+  }
+};
 export const MCFFlightsContext = createContext<{
   getMCFCities:() => Promise<Cities>,
   getMCFReturnFlights:(params?: FlightsParams) => Promise<ReturnFlights>,
+  getMCFOneWayFlights:(params?: FlightsParams) => Promise<OneWayFlights>,
   returnFlightResults: ReturnFlightObj[] | undefined,
-  setReturnFlightResults: Dispatch<SetStateAction<ReturnFlightObj[] | undefined>>
+  setReturnFlightResults: Dispatch<SetStateAction<ReturnFlightObj[] | undefined>>,
+  oneWayFlightResults: Flight[] | undefined,
+  setOneWayFlightResults: Dispatch<SetStateAction<Flight[] | undefined>>
     }>({
-      getMCFCities: () => Promise.resolve({
-        data: {
-          total: 0,
-          result: []
-        }
-      }),
-      getMCFReturnFlights: () => Promise.resolve({
-        data: {
-          total: 0,
-          result: []
-        }
-      }),
+      getMCFCities: () => Promise.resolve(stub),
+      getMCFReturnFlights: () => Promise.resolve(stub),
+      getMCFOneWayFlights: () => Promise.resolve(stub),
       returnFlightResults: undefined,
-      setReturnFlightResults: () => { /* stub */ }
+      setReturnFlightResults: () => { /* stub */ },
+      oneWayFlightResults: undefined,
+      setOneWayFlightResults: () => { /* stub */ }
     });
 const MCFFlightsProvider: FC = ({ children }): ReactElement => {
   axios.defaults.baseURL = config.axios.baseURL;
   const [returnFlightResults, setReturnFlightResults] = useState<ReturnFlightObj[] | undefined>();
+  const [oneWayFlightResults, setOneWayFlightResults] = useState<Flight[] | undefined>();
   return (
     <MCFFlightsContext.Provider value={{
       getMCFCities: () => axios.get("/v1/cities"),
       getMCFReturnFlights: (params?: FlightsParams) => axios.get("/v1/flights", { params }),
+      getMCFOneWayFlights: (params?: FlightsParams) => axios.get("/v1/flights", { params }),
       returnFlightResults,
-      setReturnFlightResults
+      setReturnFlightResults,
+      oneWayFlightResults,
+      setOneWayFlightResults
     }}
     >
       {children}

@@ -6,66 +6,89 @@ import moment from "moment";
 import { MCFFlightsContext } from "../contexts/MCFFlightsProvider";
 import FlightsLogo from "../assets/flights-logo.png";
 const FlightResults: FC = (): ReactElement => {
-  const { returnFlightResults } = useContext(MCFFlightsContext);
+  const { returnFlightResults, oneWayFlightResults } = useContext(MCFFlightsContext);
+  const oneWayContainer: FC<{
+    iata: string
+    flightNo: string,
+    to: string,
+    from: string,
+    departure: string,
+    arrival: string
+  }> = ({
+    iata, flightNo, to, from, departure, arrival
+  }): ReactElement => (
+    <>
+      <Container style={{ padding: "1rem" }}>
+        <Card.Image
+          src={FlightsLogo}
+          style={{ width: "5rem" }}
+        />
+        <Card.Content>
+          {iata}
+        </Card.Content>
+      </Container>
+      <Container textAlign="center" style={{ padding: "1rem" }}>
+        <Card.Content paddingless>
+          {flightNo}
+        </Card.Content>
+        <Card.Content paddingless>
+          {`${from} > ${to}`}
+        </Card.Content>
+        <Card.Content paddingless>
+          {`Depart: ${moment(departure).format("hh:mma")}`}
+        </Card.Content>
+        <Card.Content paddingless>
+          {`Arrival: ${moment(arrival).format("hh:mma")}`}
+        </Card.Content>
+      </Container>
+    </>
+  );
   return (
     <>
-      {returnFlightResults && (
+      {(returnFlightResults || oneWayFlightResults) && (
         <Container display="block">
           <Heading style={{ padding: "2rem" }}>
             Your Results
           </Heading>
           <Container display="flex" justifyContent="center" flexDirection="column">
-            {returnFlightResults.map((r) => (
+            {returnFlightResults && returnFlightResults.map((r) => (
               <Card key={`${r.departingFlight.id}${r.returningFlight.id}`} style={{ width: "40rem" }}>
                 <Container display="flex" alignItems="center">
-                  <Container style={{ padding: "1rem" }}>
-                    <Card.Image
-                      src={FlightsLogo}
-                      style={{ width: "5rem" }}
-                    />
-                    <Card.Content>
-                      {r.departingFlight.iata}
-                    </Card.Content>
-                  </Container>
-                  <Container textAlign="center" style={{ padding: "1rem" }}>
-                    <Card.Content paddingless>
-                      {r.departingFlight.flightNo}
-                    </Card.Content>
-                    <Card.Content paddingless>
-                      {`${r.departingFlight.from.code} > ${r.departingFlight.to.code}`}
-                    </Card.Content>
-                    <Card.Content paddingless>
-                      {`Depart: ${moment(r.departingFlight.time.departure).format("hh:mma")}`}
-                    </Card.Content>
-                    <Card.Content paddingless>
-                      {`Arrival: ${moment(r.departingFlight.time.arrival).format("hh:mma")}`}
-                    </Card.Content>
-                  </Container>
-                  <Container style={{ padding: "1rem" }}>
-                    <Card.Image
-                      src={FlightsLogo}
-                      style={{ width: "5rem" }}
-                    />
-                    <Card.Content>
-                      {r.returningFlight.iata}
-                    </Card.Content>
-                  </Container>
-                  <Container textAlign="center" style={{ padding: "1rem" }}>
-                    <Card.Content paddingless>
-                      {r.returningFlight.flightNo}
-                    </Card.Content>
-                    <Card.Content paddingless>
-                      {`${r.returningFlight.from.code} > ${r.returningFlight.to.code}`}
-                    </Card.Content>
-                    <Card.Content paddingless>
-                      {`Depart: ${moment(r.returningFlight.time.departure).format("hh:mma")}`}
-                    </Card.Content>
-                    <Card.Content paddingless>
-                      {`Arrival: ${moment(r.returningFlight.time.arrival).format("hh:mma")}`}
-                    </Card.Content>
-                  </Container>
+                  {oneWayContainer({
+                    iata: r.departingFlight.iata,
+                    flightNo: r.departingFlight.flightNo,
+                    to: r.departingFlight.to.code,
+                    from: r.departingFlight.from.code,
+                    departure: r.departingFlight.time.departure,
+                    arrival: r.departingFlight.time.arrival
+                  })}
+                  {oneWayContainer({
+                    iata: r.returningFlight.iata,
+                    flightNo: r.returningFlight.flightNo,
+                    to: r.returningFlight.to.code,
+                    from: r.returningFlight.from.code,
+                    departure: r.returningFlight.time.departure,
+                    arrival: r.returningFlight.time.arrival
+                  })}
                   <Card.Content>
                     {`$${r.returningFlight.price.amount}`}
+                  </Card.Content>
+                </Container>
+              </Card>
+            ))}
+            {oneWayFlightResults && oneWayFlightResults.map((r) => (
+              <Card key={r.id} style={{ width: "25rem" }}>
+                <Container display="flex" alignItems="center">
+                  {oneWayContainer({
+                    iata: r.iata,
+                    flightNo: r.flightNo,
+                    to: r.to.code,
+                    from: r.from.code,
+                    departure: r.time.departure,
+                    arrival: r.time.arrival
+                  })}
+                  <Card.Content>
+                    {`$${r.price.amount}`}
                   </Card.Content>
                 </Container>
               </Card>
