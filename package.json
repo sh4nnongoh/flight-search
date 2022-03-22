@@ -42,7 +42,7 @@
     "lint": "yarn eslint --ext .ts,.tsx src/ --fix",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "cors": "git submodule update && cd cors-anywhere && yarn && node server.js"
+    "cors": "git submodule init && git submodule update && cd cors-anywhere && yarn && node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
