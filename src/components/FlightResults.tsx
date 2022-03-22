@@ -7,8 +7,11 @@ import {
 import moment from "moment";
 import { MCFFlightsContext } from "../contexts/MCFFlightsProvider";
 import FlightsLogo from "../assets/flights-logo.png";
+import DisplayError from "./DisplayError";
 const FlightResults: FC = (): ReactElement => {
-  const { returnFlightResults, oneWayFlightResults, loadingFlightResults } = useContext(MCFFlightsContext);
+  const {
+    returnFlightResults, oneWayFlightResults, loadingFlightResults, hasFlightsError
+  } = useContext(MCFFlightsContext);
   const oneWayContainer: FC<{
     iata: string
     flightNo: string,
@@ -47,14 +50,19 @@ const FlightResults: FC = (): ReactElement => {
   );
   return (
     <>
-      {loadingFlightResults && (
-      <Container display="flex" justifyContent="center">
-        <Loader data-testid="loader" style={{ padding: "1rem", margin: "3rem" }} />
-      </Container>
-      )}
+      {
+        !hasFlightsError && loadingFlightResults && (
+          <Container display="flex" justifyContent="center">
+            <Loader data-testid="loader" style={{ padding: "1rem", margin: "3rem" }} />
+          </Container>
+        )
+      }
+      {
+        hasFlightsError && (<DisplayError />)
+      }
       {!loadingFlightResults && (returnFlightResults || oneWayFlightResults) && (
         <Container display="block">
-          <Heading subtitle marginless style={{ padding: "2rem" }}>
+          <Heading marginless style={{ padding: "2rem" }}>
             Your Results
           </Heading>
           <Container display="flex" justifyContent="center" flexDirection="column">
@@ -65,7 +73,10 @@ const FlightResults: FC = (): ReactElement => {
               </Heading>
             )}
             {returnFlightResults?.map((r) => (
-              <Card key={`${r.departingFlight.id}${r.returningFlight.id}`} style={{ width: "40rem", maxWidth: "100vw" }}>
+              <Card
+                key={`${r.departingFlight.id}${r.returningFlight.id}`}
+                style={{ width: "40rem", maxWidth: "100vw" }}
+              >
                 <Container display="flex" alignItems="center">
                   {oneWayContainer({
                     iata: r.departingFlight.iata,

@@ -26,7 +26,12 @@ const FlightDetailsForm: FC<{
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const {
-    getMCFReturnFlights, setReturnFlightResults, getMCFOneWayFlights, setOneWayFlightResults, setLoadingFlightResults
+    getMCFReturnFlights,
+    setReturnFlightResults,
+    getMCFOneWayFlights,
+    setOneWayFlightResults,
+    setLoadingFlightResults,
+    setHasFlightsError
   } = useContext(MCFFlightsContext);
   const onSearch = () => {
     setLoadingFlightResults(true);
@@ -40,8 +45,8 @@ const FlightDetailsForm: FC<{
       }).then((r) => {
         setLoadingFlightResults(false);
         setOneWayFlightResults(_.get(r, ["data", "data", "result"], []));
-      }).catch((e) => {
-        console.log(e);
+      }).catch(() => {
+        setHasFlightsError(true);
       });
     } else {
       getMCFReturnFlights({
@@ -52,8 +57,8 @@ const FlightDetailsForm: FC<{
       }).then((r) => {
         setLoadingFlightResults(false);
         setReturnFlightResults(_.get(r, ["data", "data", "result"], []));
-      }).catch((e) => {
-        console.log(e);
+      }).catch(() => {
+        setHasFlightsError(true);
       });
     }
   };

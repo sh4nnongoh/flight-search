@@ -15,5 +15,6 @@ describe(userStory, () => {
     screen.getByTestId("loader");
     await waitFor(() => screen
       .getByText(/The application is currently experiencing some issues. Please check back later./i));
+    expect(screen.queryByTestId("loader")).not.toBeInTheDocument();
   });
 });

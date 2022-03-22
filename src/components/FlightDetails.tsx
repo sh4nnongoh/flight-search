@@ -3,12 +3,13 @@ import React, {
   FC, ReactElement, useContext, useEffect, useState
 } from "react";
 import {
-  Container, Heading, Loader, Tabs
+  Container, Loader, Tabs
 } from "react-bulma-components";
 import { City, MCFFlightsContext } from "../contexts/MCFFlightsProvider";
+import DisplayError from "./DisplayError";
 import FlightDetailsForm from "./FlightDetailsForm";
 const FlightDetails: FC = (): ReactElement => {
-  const { getMCFCities, setHasError, hasError } = useContext(MCFFlightsContext);
+  const { getMCFCities, setHasCitiesError, hasCitiesError } = useContext(MCFFlightsContext);
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [tab0Active, setTab0Active] = useState(false);
@@ -22,25 +23,21 @@ const FlightDetails: FC = (): ReactElement => {
       setIsLoading(false);
     })
       .catch(() => {
-        setHasError(true);
+        setHasCitiesError(true);
       });
   }, []);
   return (
     <>
-      <Container display="flex" justifyContent="center">
-        {
-          !hasError && isLoading && (
+      {
+        !hasCitiesError && isLoading && (
+          <Container display="flex" justifyContent="center">
             <Loader data-testid="loader" style={{ padding: "1rem", margin: "3rem" }} />
-          )
-        }
-        {
-          hasError && (
-            <Heading subtitle style={{ padding: "2rem" }}>
-              The application is currently experiencing some issues. Please check back later.
-            </Heading>
-          )
-        }
-      </Container>
+          </Container>
+        )
+      }
+      {
+        hasCitiesError && (<DisplayError />)
+      }
       {
       !isLoading && (
         <Container style={{ width: "18rem" }}>
