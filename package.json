@@ -37,7 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
+    "test": "react-scripts test --watchAll --coverage",
     "eject": "react-scripts eject",
     "lint": "yarn eslint --ext .ts,.tsx src/ --fix",
     "predeploy": "npm run build",
@@ -57,6 +57,20 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": ["./src/**"],
+    "coverageThreshold": {
+      "global": {
+        "lines": 90
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "MCFFlightsProvider.tsx",
+      "reportWebVitals.ts",
+      "react-app-env.d.ts",
+      "index.tsx"
     ]
   }
 }
