@@ -37,6 +37,7 @@ const FlightDetailsForm: FC<{
     setLoadingFlightResults(true);
     setReturnFlightResults(undefined);
     setOneWayFlightResults(undefined);
+    setHasFlightsError(false);
     if (tab0Active) {
       getMCFOneWayFlights({
         origin: from,
