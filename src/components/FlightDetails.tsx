@@ -14,7 +14,7 @@ const FlightDetails: FC = (): ReactElement => {
   const [tab0Active, setTab0Active] = useState(false);
   useEffect(() => {
     setIsLoading(true);
-    getMCFCities?.then((res) => {
+    getMCFCities().then((res) => {
       setOptions(_.get(res, ["data", "data", "result"], []).map((city: City) => ({
         value: city.code,
         displayName: `${city.name}, ${city.country}`

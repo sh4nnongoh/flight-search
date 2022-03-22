@@ -1,10 +1,10 @@
-import bulmaCalendar from "bulma-calendar";
 import React, {
-  FC, ReactElement, useEffect
+  FC, ReactElement, useContext, useState
 } from "react";
 import {
   Button, Container, Form
 } from "react-bulma-components";
+import { MCFFlightsContext } from "../contexts/Contexts";
 interface OptionType {
   value: string,
   displayName: string
@@ -14,9 +14,23 @@ const FlightDetailsForm: FC<{
   tab0Active: boolean
 }> = ({ options, tab0Active }): ReactElement => {
   const optionList = options.map((opt) => <option key={opt.value} value={opt.value}>{opt.displayName}</option>);
-  useEffect(() => {
-    bulmaCalendar.attach("[type=\"date\"]");
-  }, [tab0Active]);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const { getMCFFlights } = useContext(MCFFlightsContext);
+  const onSearch = () => {
+    getMCFFlights({
+      origin: from,
+      destination: to,
+      "departure-date": departureDate,
+      "return-date": returnDate
+    }).then((r) => {
+      console.log(r);
+    }).catch((e) => {
+      console.log(e);
+    });
+  };
   return (
     <Container display="flex" flexDirection="column" alignItems="center">
       <form style={{ width: "18rem" }}>
@@ -25,7 +39,10 @@ const FlightDetailsForm: FC<{
             From
           </Form.Label>
           <Form.Control>
-            <Form.Select id="from-options">
+            <Form.Select
+              id="from-options"
+              onChange={(e) => setFrom(e.target.value)}
+            >
               {optionList}
             </Form.Select>
           </Form.Control>
@@ -35,7 +52,7 @@ const FlightDetailsForm: FC<{
             To
           </Form.Label>
           <Form.Control>
-            <Form.Select id="to-options">
+            <Form.Select id="to-options" onChange={(e) => setTo(e.target.value)}>
               {optionList}
             </Form.Select>
           </Form.Control>
@@ -45,7 +62,7 @@ const FlightDetailsForm: FC<{
             Departure Date
           </Form.Label>
           <Form.Control>
-            <input id="departure-date" type="date" />
+            <input id="departure-date" type="date" onChange={(e) => setDepartureDate(e.target.value)} />
           </Form.Control>
         </Form.Field>
         {
@@ -55,13 +72,13 @@ const FlightDetailsForm: FC<{
                 Return Date
               </Form.Label>
               <Form.Control>
-                <input id="return-date" type="date" />
+                <input id="return-date" type="date" onChange={(e) => setReturnDate(e.target.value)} />
               </Form.Control>
             </Form.Field>
           )
         }
       </form>
-      <Button color="primary" style={{ margin: "1.5rem" }}>
+      <Button color="primary" style={{ margin: "1.5rem" }} onClick={onSearch}>
         Search
       </Button>
     </Container>
