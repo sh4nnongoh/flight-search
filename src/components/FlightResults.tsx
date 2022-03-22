@@ -79,7 +79,7 @@ const FlightResults: FC = (): ReactElement => {
                   width: "40rem", maxWidth: "100vw", border: "1px solid lightgrey", marginBottom: "1rem"
                 }}
               >
-                <Container display="flex" alignItems="center">
+                <Container display="flex" flexWrap="wrap" alignItems="center">
                   {oneWayContainer({
                     iata: r.departingFlight.iata,
                     flightNo: r.departingFlight.flightNo,
@@ -109,7 +109,7 @@ const FlightResults: FC = (): ReactElement => {
                   width: "25rem", maxWidth: "100vw", border: "1px solid lightgrey", marginBottom: "1rem"
                 }}
               >
-                <Container display="flex" alignItems="center">
+                <Container display="flex" flexWrap="wrap" alignItems="center">
                   {oneWayContainer({
                     iata: r.iata,
                     flightNo: r.flightNo,
