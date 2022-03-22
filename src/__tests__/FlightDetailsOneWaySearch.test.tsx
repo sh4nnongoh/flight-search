@@ -6,10 +6,11 @@ import axios from "axios";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
 const userStory = `
-GIVEN a list of flight data for One Way trips between Singapore and Japan,
+GIVEN a list of flight data for one-way trips between Singapore and Japan,
 WHEN user navigates to the webapp,
-searches for return trips between Singapore and Japan,
+searches for one-way trips between Singapore and Japan,
 THEN a request is made with the relevant data,
+a loader is shown while the request completes,
 and user sees the following:
 (1) "Your Results" Header
 (2) The list of flight data between Singapore and Japan
@@ -97,6 +98,7 @@ describe(userStory, () => {
     datePickers = screen.getAllByDisplayValue("");
     fireEvent.change(datePickers[0], { target: { value: departureDate } });
     fireEvent.click(screen.getByRole("button", { name: /Search/i }));
+    screen.getByTestId("loader");
     await waitFor(() => screen.getByText(/Your Results/i));
   });
   it("calls axios with the correct data", () => {

@@ -1,12 +1,14 @@
 import React, {
   FC, ReactElement, useContext
 } from "react";
-import { Card, Container, Heading } from "react-bulma-components";
+import {
+  Card, Container, Heading, Loader
+} from "react-bulma-components";
 import moment from "moment";
 import { MCFFlightsContext } from "../contexts/MCFFlightsProvider";
 import FlightsLogo from "../assets/flights-logo.png";
 const FlightResults: FC = (): ReactElement => {
-  const { returnFlightResults, oneWayFlightResults } = useContext(MCFFlightsContext);
+  const { returnFlightResults, oneWayFlightResults, loadingFlightResults } = useContext(MCFFlightsContext);
   const oneWayContainer: FC<{
     iata: string
     flightNo: string,
@@ -45,7 +47,12 @@ const FlightResults: FC = (): ReactElement => {
   );
   return (
     <>
-      {(returnFlightResults || oneWayFlightResults) && (
+      {loadingFlightResults && (
+      <Container display="flex" justifyContent="center">
+        <Loader data-testid="loader" />
+      </Container>
+      )}
+      {!loadingFlightResults && (returnFlightResults || oneWayFlightResults) && (
         <Container display="block">
           <Heading marginless style={{ padding: "2rem" }}>
             Your Results
