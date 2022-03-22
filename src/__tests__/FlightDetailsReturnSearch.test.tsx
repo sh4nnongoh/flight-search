@@ -104,6 +104,7 @@ describe(userStory, () => {
     await waitFor(() => screen.getByText(/Your Results/i));
   });
   it("calls axios with the correct data", () => {
+    expect(datePickers).toHaveLength(2);
     expect(datePickers[0]).toHaveValue(departureDate);
     expect(datePickers[1]).toHaveValue(returnDate);
     expect(axios.get).toHaveBeenNthCalledWith(1, "/v1/cities");

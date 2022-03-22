@@ -35,7 +35,7 @@ describe(userStory, () => {
     });
   });
   it("shows 2 date pickers", () => {
-    const datePickers = screen.getAllByDisplayValue("");
+    const datePickers = screen.getAllByDisplayValue("").slice(-2);
     expect(datePickers).toHaveLength(2);
     datePickers.forEach((element) => {
       expect(element).toHaveAttribute("type", "date");

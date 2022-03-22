@@ -59,7 +59,7 @@ describe(userStory, () => {
     });
   });
   it("shows 1 date pickers", () => {
-    const datePickers = screen.getAllByDisplayValue("");
+    const datePickers = screen.getAllByDisplayValue("").slice(-1);
     expect(datePickers).toHaveLength(1);
     datePickers.forEach((element) => {
       expect(element).toHaveAttribute("type", "date");

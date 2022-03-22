@@ -14,7 +14,13 @@ const FlightDetailsForm: FC<{
   options: OptionType[],
   tab0Active: boolean
 }> = ({ options, tab0Active }): ReactElement => {
-  const optionList = options.map((opt) => <option key={opt.value} value={opt.value}>{opt.displayName}</option>);
+  const optionList = [
+    {
+      value: "",
+      displayName: ""
+    },
+    ...options
+  ].map((opt) => <option key={opt.value} value={opt.value}>{opt.displayName}</option>);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");

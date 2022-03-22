@@ -6,8 +6,8 @@ const userStory = `
 GIVEN a list of possible countries,
 WHEN user navigates to the webapp,
 THEN user sees a flight details form for "Return" trips consisting of the following details:
-(1) From Dropdown with a list of possible countries to choose from
-(2) To Dropdown with a list of possible countries to choose from
+(1) From Dropdown with a list of possible countries to choose from with an additional blank option
+(2) To Dropdown with a list of possible countries to choose from with an additional blank option
 (3) Departure Date Calendar
 (4) Return Date Calendar
 (5) Search Button
@@ -50,6 +50,7 @@ describe(userStory, () => {
   });
   it("shows the options", () => {
     [
+      { name: "" },
       { name: /Singapore/i },
       { name: /Tokyo, Japan/i }
     ].forEach((opt) => {
@@ -57,7 +58,7 @@ describe(userStory, () => {
     });
   });
   it("shows the 2 date pickers", () => {
-    const datePickers = screen.getAllByDisplayValue("");
+    const datePickers = screen.getAllByDisplayValue("").slice(-2);
     expect(datePickers).toHaveLength(2);
     datePickers.forEach((element) => {
       expect(element).toHaveAttribute("type", "date");
