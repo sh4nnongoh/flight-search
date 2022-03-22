@@ -109,7 +109,15 @@ const FlightDetailsForm: FC<{
           )
         }
       </form>
-      <Button color="primary" style={{ margin: "1.5rem" }} onClick={onSearch}>
+      <Button
+        color="primary"
+        style={{ margin: "1.5rem" }}
+        onClick={onSearch}
+        disabled={
+          (!tab0Active && (from === "" || to === "" || departureDate === "" || returnDate === ""))
+          || (tab0Active && (from === "" || to === "" || departureDate === ""))
+        }
+      >
         Search
       </Button>
     </Container>
