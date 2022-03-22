@@ -65,7 +65,7 @@ const FlightResults: FC = (): ReactElement => {
               </Heading>
             )}
             {returnFlightResults?.map((r) => (
-              <Card key={`${r.departingFlight.id}${r.returningFlight.id}`} style={{ width: "40rem" }}>
+              <Card key={`${r.departingFlight.id}${r.returningFlight.id}`} style={{ width: "40rem", maxWidth: "100vw" }}>
                 <Container display="flex" alignItems="center">
                   {oneWayContainer({
                     iata: r.departingFlight.iata,
@@ -90,7 +90,7 @@ const FlightResults: FC = (): ReactElement => {
               </Card>
             ))}
             {oneWayFlightResults?.map((r) => (
-              <Card key={r.id} style={{ width: "25rem" }}>
+              <Card key={r.id} style={{ width: "25rem", maxWidth: "100vw" }}>
                 <Container display="flex" alignItems="center">
                   {oneWayContainer({
                     iata: r.iata,
