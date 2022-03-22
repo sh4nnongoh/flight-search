@@ -5,9 +5,9 @@ import App from "../App";
 const userStory = `
 GIVEN a list of possible countries,
 WHEN user navigates to the webapp,
-THEN user sees a flight details form for "Return" trips consisting of the following details:
+THEN user sees a loader before seeing a flight details form for "Return" trips consisting of the following details:
 (1) From Dropdown with a list of possible countries to choose from with an additional blank option
-(2) To Dropdown with a list of possible countries to choose from with an additional blank option
+(2) To Dropdown with a list of possible countries to choose from  with an additional blank option
 (3) Departure Date Calendar
 (4) Return Date Calendar
 (5) Search Button
@@ -32,6 +32,7 @@ describe(userStory, () => {
       }
     });
     render(<App />);
+    screen.getByTestId("loader");
     await waitFor(() => screen.getByText(/^Return$/));
   });
   it("shows the 2 tabs", () => {

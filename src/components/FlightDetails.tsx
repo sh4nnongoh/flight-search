@@ -3,7 +3,7 @@ import React, {
   FC, ReactElement, useContext, useEffect, useState
 } from "react";
 import {
-  Container, Tabs
+  Container, Loader, Tabs
 } from "react-bulma-components";
 import { City, MCFFlightsContext } from "../contexts/MCFFlightsProvider";
 import FlightDetailsForm from "./FlightDetailsForm";
@@ -24,6 +24,11 @@ const FlightDetails: FC = (): ReactElement => {
   }, []);
   return (
     <>
+      {isLoading && (
+      <Container display="flex" justifyContent="center">
+        <Loader data-testid="loader" />
+      </Container>
+      )}
       {
       !isLoading && (
         <Container style={{ width: "18rem" }}>
