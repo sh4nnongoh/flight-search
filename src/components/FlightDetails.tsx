@@ -30,7 +30,7 @@ const FlightDetails: FC = (): ReactElement => {
             <Tabs.Tab>
               One Way
             </Tabs.Tab>
-            <Tabs.Tab>
+            <Tabs.Tab active>
               Return
             </Tabs.Tab>
           </Tabs>

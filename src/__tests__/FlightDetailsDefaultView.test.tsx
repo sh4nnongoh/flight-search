@@ -11,6 +11,7 @@ THEN user sees a flight details form for "Return" trips consisting of the follow
 (3) Departure Date Calendar
 (4) Return Date Calendar
 (5) Search Button
+(6) The active tab to be "Return"
 `;
 describe(userStory, () => {
   const cities = [{
@@ -64,5 +65,9 @@ describe(userStory, () => {
   });
   it("shows the Search Button", () => {
     expect(screen.getByRole("button", { name: /Search/i })).toBeInTheDocument();
+  });
+  it("shows the 'Return' tab as active", () => {
+    const tabs = screen.getAllByRole("listitem", { name: "" });
+    expect(tabs[1]).toHaveClass("is-active");
   });
 });
