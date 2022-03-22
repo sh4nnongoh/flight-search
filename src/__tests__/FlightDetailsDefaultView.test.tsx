@@ -1,5 +1,6 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import axios from "axios";
 import App from "../App";
 const userStory = `
 GIVEN a list of possible countries,
@@ -12,8 +13,25 @@ THEN user sees a flight details form for "Return" trips consisting of the follow
 (5) Search Button
 `;
 describe(userStory, () => {
-  beforeEach(() => {
+  const cities = [{
+    code: "SIN",
+    name: "Singapore",
+    country: "Singapore"
+  }, {
+    code: "TYO",
+    name: "Tokyo",
+    country: "Japan"
+  }];
+  beforeEach(async () => {
+    axios.get = jest.fn().mockResolvedValue({
+      data: {
+        data: {
+          result: cities
+        }
+      }
+    });
     render(<App />);
+    await waitFor(() => screen.getByText(/^Return$/));
   });
   it("shows the 2 tabs", () => {
     expect(screen.getByText(/^One Way$/)).toBeInTheDocument();
