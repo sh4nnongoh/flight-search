@@ -74,7 +74,9 @@ export const MCFFlightsContext = createContext<{
   oneWayFlightResults: Flight[] | undefined,
   setOneWayFlightResults: Dispatch<SetStateAction<Flight[] | undefined>>,
   loadingFlightResults: boolean,
-  setLoadingFlightResults: Dispatch<SetStateAction<boolean>>
+  setLoadingFlightResults: Dispatch<SetStateAction<boolean>>,
+  hasError: boolean,
+  setHasError: Dispatch<SetStateAction<boolean>>
     }>({
       getMCFCities: () => Promise.resolve(stub),
       getMCFReturnFlights: () => Promise.resolve(stub),
@@ -84,13 +86,16 @@ export const MCFFlightsContext = createContext<{
       oneWayFlightResults: undefined,
       setOneWayFlightResults: () => { /* stub */ },
       loadingFlightResults: false,
-      setLoadingFlightResults: () => { /* stub */ }
+      setLoadingFlightResults: () => { /* stub */ },
+      hasError: false,
+      setHasError: () => { /* stub */ }
     });
 const MCFFlightsProvider: FC = ({ children }): ReactElement => {
   axios.defaults.baseURL = config.axios.baseURL;
   const [returnFlightResults, setReturnFlightResults] = useState<ReturnFlightObj[] | undefined>();
   const [oneWayFlightResults, setOneWayFlightResults] = useState<Flight[] | undefined>();
   const [loadingFlightResults, setLoadingFlightResults] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
   return (
     <MCFFlightsContext.Provider value={{
       getMCFCities: () => axios.get("/v1/cities"),
@@ -101,7 +106,9 @@ const MCFFlightsProvider: FC = ({ children }): ReactElement => {
       oneWayFlightResults,
       setOneWayFlightResults,
       loadingFlightResults,
-      setLoadingFlightResults
+      setLoadingFlightResults,
+      hasError,
+      setHasError
     }}
     >
       {children}

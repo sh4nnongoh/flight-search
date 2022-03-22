@@ -54,7 +54,7 @@ const FlightResults: FC = (): ReactElement => {
       )}
       {!loadingFlightResults && (returnFlightResults || oneWayFlightResults) && (
         <Container display="block">
-          <Heading marginless style={{ padding: "2rem" }}>
+          <Heading subtitle marginless style={{ padding: "2rem" }}>
             Your Results
           </Heading>
           <Container display="flex" justifyContent="center" flexDirection="column">
