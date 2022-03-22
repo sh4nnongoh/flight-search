@@ -26,7 +26,7 @@ const FlightDetails: FC = (): ReactElement => {
     <>
       {isLoading && (
       <Container display="flex" justifyContent="center">
-        <Loader data-testid="loader" />
+        <Loader data-testid="loader" style={{ padding: "1rem", margin: "3rem" }} />
       </Container>
       )}
       {

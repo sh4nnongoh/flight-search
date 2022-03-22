@@ -16,7 +16,7 @@ const App: FC = (): ReactElement => (
         Flights
       </Heading>
     </Container>
-    <Container display="flex">
+    <Container display="flex" flexWrap="wrap">
       <FlightDetails />
       <FlightResults />
     </Container>

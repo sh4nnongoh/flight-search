@@ -49,7 +49,7 @@ const FlightResults: FC = (): ReactElement => {
     <>
       {loadingFlightResults && (
       <Container display="flex" justifyContent="center">
-        <Loader data-testid="loader" />
+        <Loader data-testid="loader" style={{ padding: "1rem", margin: "3rem" }} />
       </Container>
       )}
       {!loadingFlightResults && (returnFlightResults || oneWayFlightResults) && (
