@@ -47,11 +47,17 @@ const FlightResults: FC = (): ReactElement => {
     <>
       {(returnFlightResults || oneWayFlightResults) && (
         <Container display="block">
-          <Heading style={{ padding: "2rem" }}>
+          <Heading marginless style={{ padding: "2rem" }}>
             Your Results
           </Heading>
           <Container display="flex" justifyContent="center" flexDirection="column">
-            {returnFlightResults && returnFlightResults.map((r) => (
+            {(returnFlightResults?.length === 0 || oneWayFlightResults?.length === 0)
+            && (
+              <Heading subtitle style={{ padding: "2rem" }}>
+                There are no flights available for your current query.
+              </Heading>
+            )}
+            {returnFlightResults?.map((r) => (
               <Card key={`${r.departingFlight.id}${r.returningFlight.id}`} style={{ width: "40rem" }}>
                 <Container display="flex" alignItems="center">
                   {oneWayContainer({
@@ -76,7 +82,7 @@ const FlightResults: FC = (): ReactElement => {
                 </Container>
               </Card>
             ))}
-            {oneWayFlightResults && oneWayFlightResults.map((r) => (
+            {oneWayFlightResults?.map((r) => (
               <Card key={r.id} style={{ width: "25rem" }}>
                 <Container display="flex" alignItems="center">
                   {oneWayContainer({
