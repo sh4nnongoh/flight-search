@@ -1,45 +1,22 @@
-import _ from "lodash";
 import React, {
-  FC, ReactElement, useContext, useEffect, useState
+  FC, ReactElement, useContext, useState
 } from "react";
 import {
-  Container, Loader, Tabs
+  Container, Tabs
 } from "react-bulma-components";
-import { City, MCFFlightsContext } from "../contexts/MCFFlightsProvider";
-import DisplayError from "./DisplayError";
+import { MCFCitiesStateContext } from "../contexts/MCFFlightsProvider";
+import FlightDetailsError from "./FlightDetailsError";
 import FlightDetailsForm from "./FlightDetailsForm";
+import FlightDetailsLoader from "./FlightDetailsLoader";
 const FlightDetails: FC = (): ReactElement => {
-  const { getMCFCities, setHasCitiesError, hasCitiesError } = useContext(MCFFlightsContext);
-  const [options, setOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { loadingCities } = useContext(MCFCitiesStateContext);
   const [tab0Active, setTab0Active] = useState(false);
-  useEffect(() => {
-    setIsLoading(true);
-    getMCFCities().then((res) => {
-      setOptions(_.get(res, ["data", "data", "result"], []).map((city: City) => ({
-        value: city.code,
-        displayName: `${city.name}, ${city.country}`
-      })));
-      setIsLoading(false);
-    })
-      .catch(() => {
-        setHasCitiesError(true);
-      });
-  }, []);
   return (
     <>
+      <FlightDetailsLoader />
+      <FlightDetailsError />
       {
-        !hasCitiesError && isLoading && (
-          <Container display="flex" justifyContent="center">
-            <Loader data-testid="loader" style={{ padding: "1rem", margin: "3rem" }} />
-          </Container>
-        )
-      }
-      {
-        hasCitiesError && (<DisplayError />)
-      }
-      {
-      !isLoading && (
+      !loadingCities && (
         <Container style={{ width: "18rem" }}>
           <Tabs align="center">
             <Tabs.Tab active={tab0Active} onClick={() => setTab0Active(true)}>
@@ -49,7 +26,7 @@ const FlightDetails: FC = (): ReactElement => {
               Return
             </Tabs.Tab>
           </Tabs>
-          <FlightDetailsForm options={options} tab0Active={tab0Active} />
+          <FlightDetailsForm tab0Active={tab0Active} />
         </Container>
       )
     }

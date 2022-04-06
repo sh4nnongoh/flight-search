@@ -5,13 +5,13 @@ import {
   Card, Container, Heading, Loader
 } from "react-bulma-components";
 import moment from "moment";
-import { MCFFlightsContext } from "../contexts/MCFFlightsProvider";
+import { MCFFlightsStateContext } from "../contexts/MCFFlightsProvider";
 import FlightsLogo from "../assets/flights-logo.png";
 import DisplayError from "./DisplayError";
 const FlightResults: FC = (): ReactElement => {
   const {
     returnFlightResults, oneWayFlightResults, loadingFlightResults, hasFlightsError
-  } = useContext(MCFFlightsContext);
+  } = useContext(MCFFlightsStateContext);
   const oneWayContainer: FC<{
     iata: string
     flightNo: string,

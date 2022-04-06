@@ -6,22 +6,10 @@ import React, {
 import {
   Button, Container, Form
 } from "react-bulma-components";
-import { MCFFlightsContext } from "../contexts/MCFFlightsProvider";
-interface OptionType {
-  value: string,
-  displayName: string
-}
+import { MCFCitiesStateContext, MCFSetStateContext } from "../contexts/MCFFlightsProvider";
 const FlightDetailsForm: FC<{
-  options: OptionType[],
   tab0Active: boolean
-}> = ({ options, tab0Active }): ReactElement => {
-  const optionList = [
-    {
-      value: "",
-      displayName: ""
-    },
-    ...options
-  ].map((opt) => <option key={opt.value} value={opt.value}>{opt.displayName}</option>);
+}> = ({ tab0Active }): ReactElement => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -33,7 +21,15 @@ const FlightDetailsForm: FC<{
     setOneWayFlightResults,
     setLoadingFlightResults,
     setHasFlightsError
-  } = useContext(MCFFlightsContext);
+  } = useContext(MCFSetStateContext);
+  const { cityOptionList } = useContext(MCFCitiesStateContext);
+  const optionList = [
+    {
+      value: "",
+      displayName: ""
+    },
+    ...cityOptionList
+  ].map((opt) => <option key={opt.value} value={opt.value}>{opt.displayName}</option>);
   const onSearch = () => {
     setLoadingFlightResults(true);
     setReturnFlightResults(undefined);

@@ -75,6 +75,10 @@ describe(userStory, () => {
   const departureDate = "2022-03-24";
   let datePickers: HTMLElement[];
   beforeEach(async () => {
+    axios.CancelToken.source = jest.fn().mockReturnValue({
+      token: "token",
+      cancel: jest.fn()
+    });
     axios.get = jest.fn()
       .mockResolvedValueOnce({
         data: {
@@ -103,7 +107,7 @@ describe(userStory, () => {
   });
   it("calls axios with the correct data", () => {
     expect(datePickers[0]).toHaveValue(departureDate);
-    expect(axios.get).toHaveBeenNthCalledWith(1, "/v1/cities");
+    expect(axios.get).toHaveBeenNthCalledWith(1, "/v1/cities", { cancelToken: "token" });
     expect(axios.get).toHaveBeenNthCalledWith(2, "/v1/flights", {
       params: {
         origin: cities[0].code,
