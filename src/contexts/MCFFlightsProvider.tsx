@@ -102,6 +102,7 @@ const MCFFlightsProvider: FC = ({ children }): ReactElement => {
   const [hasCitiesError, setHasCitiesError] = useState<boolean>(false);
   const [hasFlightsError, setHasFlightsError] = useState<boolean>(false);
   return (
+    // eslint-disable-next-line
     <MCFFlightsContext.Provider value={{
       getMCFCities: () => axios.get("/v1/cities"),
       getMCFReturnFlights: (params?: FlightsParams) => axios.get("/v1/flights", { params }),
