@@ -2,6 +2,10 @@
 ## About
 A single page application that displays MCF flight information from given API endpoints.
 
+The endpoints are made to fail periodically to test the webapp's ability to handle errors.
+
+Flight data is only available from today, till 1 month later.
+
 The webapp can be viewed live [here](https://sh4nnongoh.github.io/flight-search/).
 
 The list of user stories can be viewed [here](https://trello.com/b/gM8JgjeL/flights).
